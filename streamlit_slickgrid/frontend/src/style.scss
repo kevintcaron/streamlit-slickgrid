@@ -44,15 +44,10 @@ body {
     background-color: var(--slickgrid-bg-color) !important;
     color: var(--slickgrid-text-color) !important;
   }
-  
-  /* Maintain alternating row colors using theme colors */
+    /* Maintain alternating row colors using theme colors */
   .slick-row {
     background-color: var(--slickgrid-bg-color) !important;
     color: var(--slickgrid-text-color) !important;
-    
-    &:hover {
-      background-color: var(--slickgrid-secondary-bg-color) !important;
-    }
     
     &.selected {
       background-color: var(--slickgrid-primary-color) !important;
@@ -62,9 +57,16 @@ body {
   .slick-row.odd {
     background-color: var(--slickgrid-secondary-bg-color) !important;
     
-    &:hover {
-      /* Subtle highlight using lighter primary color */
-      background-color: var(--slickgrid-primary-color) !important;
+    &:hover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 3px solid var(--slickgrid-primary-color);
+      pointer-events: none;
+      z-index: 1000;
     }
   }
   
@@ -72,8 +74,16 @@ body {
   .slick-row.even {
     background-color: var(--slickgrid-bg-color) !important;
     
-    &:hover {
-      background-color: var(--slickgrid-primary-color) !important;
+    &:hover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 3px solid var(--slickgrid-primary-color);
+      pointer-events: none;
+      z-index: 1000;
     }
   }
   
