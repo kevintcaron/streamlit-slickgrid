@@ -30,3 +30,100 @@ body {
 .slickgrid-container * {
   font-family: var(--font) !important;
 }
+
+.streamlit-slickgrid-wrapper {
+  /* Theme-aware CSS variables will be set from React component */
+  
+  /* Override SlickGrid's default colors with theme-aware variables */
+  .slick-grid {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+  }
+  
+  .slick-header-column {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+  }
+  
+  /* Maintain alternating row colors using theme colors */
+  .slick-row {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+    
+    &:hover {
+      background-color: var(--slickgrid-secondary-bg-color) !important;
+    }
+    
+    &.selected {
+      background-color: var(--slickgrid-primary-color) !important;
+      color: white !important;
+    }
+  }  /* Alternating row colors - even rows use secondary background */
+  .slick-row.odd {
+    background-color: var(--slickgrid-secondary-bg-color) !important;
+    
+    &:hover {
+      /* Subtle highlight using lighter primary color */
+      background-color: var(--slickgrid-primary-color) !important;
+    }
+  }
+  
+  /* Odd rows use primary background */
+  .slick-row.even {
+    background-color: var(--slickgrid-bg-color) !important;
+    
+    &:hover {
+      background-color: var(--slickgrid-primary-color) !important;
+    }
+  }
+  
+  /* Viewport styling */
+  .slick-header-columns {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+  }
+  
+  .slick-headerrow-column {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+  }
+
+  .slick-headerrow {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+  }
+  
+  .slick-filter {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+  }
+
+  .form-control {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+    border: 1px solid var(--slickgrid-secondary-bg-color) !important;
+  }
+
+  .slider-values {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+  }
+
+  .ms-choice {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+    border: 1px solid var(--slickgrid-secondary-bg-color) !important;
+  }
+
+  .slick-pane {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+  }
+
+  .slick-viewport {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
+  }
+
+
+}

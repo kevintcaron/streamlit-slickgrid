@@ -41,6 +41,18 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
   const [columns, setColumns] = useState(() => replaceJsStrings(args.columns))
   const [options, setOptions] = useState(() => replaceJsStrings(args.options))
   const [data, setData] = useState(args.data)
+  const getThemeStyles = useCallback(() => {
+    if (!theme) return {}
+    
+    const primaryColor = theme.primaryColor || '#ff4b4b'
+    
+    return {
+      '--slickgrid-bg-color': theme.backgroundColor || '#ffffff',
+      '--slickgrid-secondary-bg-color': theme.secondaryBackgroundColor || '#f0f2f6',
+      '--slickgrid-text-color': theme.textColor || '#262730',
+      '--slickgrid-primary-color': primaryColor,
+    } as React.CSSProperties
+  }, [theme])
 
   useEffect(() => {
     setColumns(replaceJsStrings(args.columns))
@@ -66,16 +78,17 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
   const onReactGridCreated = useCallback(() => {
     Streamlit.setFrameHeight()
   }, [])
-
   return (
-    <SlickgridReact
-      gridId="streamlit-slickgrid"
-      columnDefinitions={columns}
-      gridOptions={options}
-      dataset={data}
-      onReactGridCreated={onReactGridCreated}
-      onClick={args.onClick ? onClick : undefined}
-    />
+    <div className="streamlit-slickgrid-wrapper" style={getThemeStyles()}>
+      <SlickgridReact
+        gridId="streamlit-slickgrid"
+        columnDefinitions={columns}
+        gridOptions={options}
+        dataset={data}
+        onReactGridCreated={onReactGridCreated}
+        onClick={args.onClick ? onClick : undefined}
+      />
+    </div>
   )
 }
 
