@@ -39,101 +39,71 @@ body {
     background-color: var(--slickgrid-bg-color) !important;
     color: var(--slickgrid-text-color) !important;
   }
-  
-  .slick-header-column {
-    background-color: var(--slickgrid-bg-color) !important;
-    color: var(--slickgrid-text-color) !important;
-  }
-    /* Maintain alternating row colors using theme colors */
-  .slick-row {
-    background-color: var(--slickgrid-bg-color) !important;
-    color: var(--slickgrid-text-color) !important;
-    
-    &.selected {
-      background-color: var(--slickgrid-primary-color) !important;
-      color: white !important;
-    }
-  }  /* Alternating row colors - even rows use secondary background */
-  .slick-row.odd {
-    background-color: var(--slickgrid-secondary-bg-color) !important;
-    
-    &:hover::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border: 3px solid var(--slickgrid-primary-color);
-      pointer-events: none;
-      z-index: 1000;
-    }
-  }
-  
-  /* Odd rows use primary background */
-  .slick-row.even {
-    background-color: var(--slickgrid-bg-color) !important;
-    
-    &:hover::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border: 3px solid var(--slickgrid-primary-color);
-      pointer-events: none;
-      z-index: 1000;
-    }
-  }
-  
-  /* Viewport styling */
-  .slick-header-columns {
-    background-color: var(--slickgrid-bg-color) !important;
-    color: var(--slickgrid-text-color) !important;
-  }
-  
+    /* Header styling */
+  .slick-header-column,
+  .slick-header-columns,
+  .slick-headerrow,
   .slick-headerrow-column {
     background-color: var(--slickgrid-bg-color) !important;
     color: var(--slickgrid-text-color) !important;
+  }/* Maintain alternating row colors using theme colors */
+  .slick-row {
+    background-color: var(--slickgrid-bg-color) !important;
+    color: var(--slickgrid-text-color) !important;
   }
-
-  .slick-headerrow {
+    /* Alternating row colors */
+  .slick-row.odd {
+    background-color: var(--slickgrid-secondary-bg-color) !important;
+  }
+  
+  .slick-row.even {
+    background-color: var(--slickgrid-bg-color) !important;
+  }
+  
+  /* Hover effect for all rows */
+  .slick-row.odd:hover::before,
+  .slick-row.even:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid var(--slickgrid-primary-color);
+    pointer-events: none;
+    z-index: 1000;
+  }
+    /* Form controls and filters */
+  .slick-filter,
+  .form-control,
+  .slider-values,
+  .ms-choice {
     background-color: var(--slickgrid-bg-color) !important;
     color: var(--slickgrid-text-color) !important;
   }
   
-  .slick-filter {
-    background-color: var(--slickgrid-bg-color) !important;
-    color: var(--slickgrid-text-color) !important;
-  }
-
-  .form-control {
-    background-color: var(--slickgrid-bg-color) !important;
-    color: var(--slickgrid-text-color) !important;
-    border: 1px solid var(--slickgrid-secondary-bg-color) !important;
-  }
-
-  .slider-values {
-    background-color: var(--slickgrid-bg-color) !important;
-    color: var(--slickgrid-text-color) !important;
-  }
-
+  .form-control,
   .ms-choice {
-    background-color: var(--slickgrid-bg-color) !important;
-    color: var(--slickgrid-text-color) !important;
     border: 1px solid var(--slickgrid-secondary-bg-color) !important;
   }
 
-  .slick-pane {
-    background-color: var(--slickgrid-bg-color) !important;
-    color: var(--slickgrid-text-color) !important;
-  }
-
+  /* Viewport styling */
+  .slick-pane,
   .slick-viewport {
     background-color: var(--slickgrid-bg-color) !important;
     color: var(--slickgrid-text-color) !important;
+  }  /* Selection styling - prevent content shift with overlay */
+  .slick-row[class*="active"],
+  .slick-row.slick-row-selected {
+    background-color: var(--slickgrid-primary-color) !important;
+    color: white !important;
+    
+    .slick-cell {
+      background-color: var(--slickgrid-primary-color) !important;
+      
+      /* Remove default borders that cause content shift */
+      border: none !important;
+      box-shadow: none !important;
+    }
   }
-
-
 }
