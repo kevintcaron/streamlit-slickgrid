@@ -41,6 +41,9 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
   const [columns, setColumns] = useState(() => replaceJsStrings(args.columns))
   const [options, setOptions] = useState(() => replaceJsStrings(args.options))
   const [data, setData] = useState(args.data)
+  const [lastClickedCell, setLastClickedCell] = useState<[number, number] | null>(null)
+  const [clickCount, setClickCount] = useState(0)
+  
   const getThemeStyles = useCallback(() => {
     if (!theme) return {}
     
@@ -68,12 +71,30 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
 
     const data = ev.detail.args.grid.data
     const rowId = data.rows[ev.detail.args.row][data.idProperty]
+    const cellCoords: [number, number] = [rowId, ev.detail.args.cell]
 
-    Streamlit.setComponentValue([
-      rowId,
-      ev.detail.args.cell,
-    ])
-  }, [])
+    // Check if this is the same cell as the last click
+    if (lastClickedCell && 
+        lastClickedCell[0] === cellCoords[0] && 
+        lastClickedCell[1] === cellCoords[1]) {
+      // Same cell clicked - toggle behavior
+      const newClickCount = clickCount + 1
+      setClickCount(newClickCount)
+      
+      if (newClickCount % 2 === 0) {
+        // Even click count (2nd, 4th, 6th...) - send null to deselect
+        Streamlit.setComponentValue(null)
+      } else {
+        // Odd click count (3rd, 5th, 7th...) - send coordinates to select
+        Streamlit.setComponentValue(cellCoords)
+      }
+    } else {
+      // Different cell clicked - reset counter and send coordinates
+      setLastClickedCell(cellCoords)
+      setClickCount(1)
+      Streamlit.setComponentValue(cellCoords)
+    }
+  }, [lastClickedCell, clickCount])
 
   const onReactGridCreated = useCallback(() => {
     Streamlit.setFrameHeight()
