@@ -54,9 +54,11 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
         if (gridContainer) {
           const activeRows = gridContainer.querySelectorAll('.slick-row.active')
           const activeCells = gridContainer.querySelectorAll('.slick-cell.active')
+          const selectedCells = gridContainer.querySelectorAll('.slick-cell.selected')
           
           activeRows.forEach(row => row.classList.remove('active'))
           activeCells.forEach(cell => cell.classList.remove('active'))
+          selectedCells.forEach(cell => cell.classList.remove('selected'))
           console.warn('Cleared active classes from grid')
         }
       }, 0)
@@ -106,6 +108,17 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
         Streamlit.setComponentValue(null)
       } else {
         // Odd click count (3rd, 5th, 7th...) - send coordinates to select
+        // Add 'selected' class to the cells in the clicked row
+        setTimeout(() => {
+          const gridContainer = document.querySelector('#streamlit-slickgrid')
+          if (gridContainer) {
+            const clickedRow = gridContainer.querySelector(`[data-row="${ev.detail.args.row}"]`)
+            if (clickedRow) {
+              const cells = clickedRow.querySelectorAll('.slick-cell')
+              cells.forEach(cell => cell.classList.add('selected'))
+            }
+          }
+        }, 0)
         Streamlit.setComponentValue(cellCoords)
       }
     } else {

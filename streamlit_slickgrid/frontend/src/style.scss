@@ -94,12 +94,9 @@ body {
     color: var(--slickgrid-text-color) !important;
   }  
   
-  /* Selection styling */
+  /* Active Row styling */
   .slick-row[class*="active"] {
-    background-color: var(--slickgrid-primary-color) !important;
-    color: white !important;
-
-    .slick-cell {
+    .slick-cell[class*="selected"] {
       background-color: var(--slickgrid-primary-color) !important;
 
       /* Remove default borders that cause content shift */
@@ -107,5 +104,15 @@ body {
       box-shadow: none !important;
     }
   }
+
+  /* Active cell styling */
+  .slick-cell[class*="active"] {
+  background-color: var(--slickgrid-primary-color) !important;
+  color: var(--slickgrid-text-color) !important;
+
+  /* Remove default borders that cause content shift */
+  border: none !important;
+  box-shadow: none !important;
+}
 
 }

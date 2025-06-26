@@ -268,12 +268,9 @@ columns = [
 # Not all grid options are supported, though!
 options = {
     #
-    # Enable row selection
-    # "enableRowSelection": True,
-    "enableCellNavigation": True, # Used for row selection
-    # "rowSelectionOptions": {
-    #     "selectActiveRow": True,
-    # },
+    # Enable cell and row selection visualizations
+    "enableRowSelection": True, # True allows row selection (enableCellNavigation must also be True)
+    "enableCellNavigation": False, # True allows cell selection visulization
     # --
     #
     # Allow filtering (based on column filter* properties)
@@ -334,6 +331,7 @@ options = {
 }
 
 out = slickgrid(data, columns, options, key="mygrid", on_click="rerun")
+
 
 @st.dialog("Details", width="large")
 def show_dialog(item):
