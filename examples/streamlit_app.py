@@ -270,7 +270,7 @@ options = {
     #
     # Enable cell and row selection visualizations
     "enableRowSelection": True, # True allows row selection (enableCellNavigation must also be True)
-    "enableCellNavigation": False, # True allows cell selection visulization
+    "enableCellNavigation": True, # True allows cell selection visulization (enableRowSelection must be False for cell selection)
     # --
     #
     # Allow filtering (based on column filter* properties)
