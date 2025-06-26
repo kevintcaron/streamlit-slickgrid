@@ -92,18 +92,20 @@ body {
   .slick-viewport {
     background-color: var(--slickgrid-bg-color) !important;
     color: var(--slickgrid-text-color) !important;
-  }  /* Selection styling - prevent content shift with overlay */
-  .slick-row[class*="active"],
-  .slick-row.slick-row-selected {
+  }  
+  
+  /* Selection styling */
+  .slick-row[class*="active"] {
     background-color: var(--slickgrid-primary-color) !important;
     color: white !important;
-    
+
     .slick-cell {
       background-color: var(--slickgrid-primary-color) !important;
-      
+
       /* Remove default borders that cause content shift */
       border: none !important;
       box-shadow: none !important;
     }
   }
+
 }

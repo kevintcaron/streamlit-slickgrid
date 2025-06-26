@@ -44,16 +44,35 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
   const [lastClickedCell, setLastClickedCell] = useState<[number, number] | null>(null)
   const [clickCount, setClickCount] = useState(0)
   
+  // Helper function to clear active classes
+  const clearActiveSelection = useCallback(() => {
+    try {
+      // Use setTimeout to ensure this runs after SlickGrid's internal processing
+      setTimeout(() => {
+        // Target only our specific grid container
+        const gridContainer = document.querySelector('#streamlit-slickgrid')
+        if (gridContainer) {
+          const activeRows = gridContainer.querySelectorAll('.slick-row.active')
+          const activeCells = gridContainer.querySelectorAll('.slick-cell.active')
+          
+          activeRows.forEach(row => row.classList.remove('active'))
+          activeCells.forEach(cell => cell.classList.remove('active'))
+          console.warn('Cleared active classes from grid')
+        }
+      }, 0)
+    } catch (error) {
+      console.warn('Failed to clear active selection:', error)
+    }
+  }, [])
+  
   const getThemeStyles = useCallback(() => {
     if (!theme) return {}
-    
-    const primaryColor = theme.primaryColor || '#ff4b4b'
-    
+        
     return {
       '--slickgrid-bg-color': theme.backgroundColor || '#ffffff',
       '--slickgrid-secondary-bg-color': theme.secondaryBackgroundColor || '#f0f2f6',
       '--slickgrid-text-color': theme.textColor || '#262730',
-      '--slickgrid-primary-color': primaryColor,
+      '--slickgrid-primary-color': theme.primaryColor || '#ff4b4b',
     } as React.CSSProperties
   }, [theme])
 
@@ -83,6 +102,7 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
       
       if (newClickCount % 2 === 0) {
         // Even click count (2nd, 4th, 6th...) - send null to deselect
+        clearActiveSelection()
         Streamlit.setComponentValue(null)
       } else {
         // Odd click count (3rd, 5th, 7th...) - send coordinates to select
@@ -94,7 +114,7 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
       setClickCount(1)
       Streamlit.setComponentValue(cellCoords)
     }
-  }, [lastClickedCell, clickCount])
+  }, [lastClickedCell, clickCount, clearActiveSelection])
 
   const onReactGridCreated = useCallback(() => {
     Streamlit.setFrameHeight()
