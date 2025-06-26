@@ -48,7 +48,6 @@ body {
     color: var(--slickgrid-text-color) !important;
   }/* Maintain alternating row colors using theme colors */
   .slick-row {
-    background-color: var(--slickgrid-bg-color) !important;
     color: var(--slickgrid-text-color) !important;
   }
     /* Alternating row colors */
@@ -94,23 +93,23 @@ body {
     color: var(--slickgrid-text-color) !important;
   }  
   
-  /* Active Row styling */
+  /* Selected Row styling when enabled */
   .slick-row[class*="active"] {
     .slick-cell[class*="selected"] {
       background-color: var(--slickgrid-primary-color) !important;
 
-      /* Remove default borders that cause content shift */
+      /* Remove slickgrid default borders that cause content shift */
       border: none !important;
       box-shadow: none !important;
     }
   }
 
-  /* Active cell styling */
+  /* Active cell styling when eneabled */
   .slick-cell[class*="active"] {
   background-color: var(--slickgrid-primary-color) !important;
   color: var(--slickgrid-text-color) !important;
 
-  /* Remove default borders that cause content shift */
+  /* Remove slickgrid default borders that cause content shift */
   border: none !important;
   box-shadow: none !important;
 }

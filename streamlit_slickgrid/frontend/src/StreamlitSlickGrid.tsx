@@ -44,12 +44,10 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
   const [lastClickedCell, setLastClickedCell] = useState<[number, number] | null>(null)
   const [clickCount, setClickCount] = useState(0)
   
-  // Helper function to clear active classes
+  // Helper function to clear active and selected classes for toggle effect
   const clearActiveSelection = useCallback(() => {
     try {
-      // Use setTimeout to ensure this runs after SlickGrid's internal processing
       setTimeout(() => {
-        // Target only our specific grid container
         const gridContainer = document.querySelector('#streamlit-slickgrid')
         if (gridContainer) {
           const activeRows = gridContainer.querySelectorAll('.slick-row.active')
@@ -59,7 +57,6 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
           activeRows.forEach(row => row.classList.remove('active'))
           activeCells.forEach(cell => cell.classList.remove('active'))
           selectedCells.forEach(cell => cell.classList.remove('selected'))
-          console.warn('Cleared active classes from grid')
         }
       }, 0)
     } catch (error) {
@@ -103,12 +100,11 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
       setClickCount(newClickCount)
       
       if (newClickCount % 2 === 0) {
-        // Even click count (2nd, 4th, 6th...) - send null to deselect
+        // Even click count - send null to deselect
         clearActiveSelection()
         Streamlit.setComponentValue(null)
       } else {
-        // Odd click count (3rd, 5th, 7th...) - send coordinates to select
-        // Add 'selected' class to the cells in the clicked row
+        // Odd click count - send coordinates to select and add 'selected' class to the cells in the clicked row
         setTimeout(() => {
           const gridContainer = document.querySelector('#streamlit-slickgrid')
           if (gridContainer) {
