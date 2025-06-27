@@ -16,7 +16,7 @@ import streamlit as st
 import os
 import streamlit.components.v1 as components
 
-_RELEASE = False
+_RELEASE = True
 _NAME = "streamlit-slickgrid"
 
 if _RELEASE:
