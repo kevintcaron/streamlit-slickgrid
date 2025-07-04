@@ -59,20 +59,7 @@ body {
     background-color: var(--slickgrid-bg-color) !important;
   }
   
-  /* Hover effect for all rows */
-  .slick-row.odd:hover::before,
-  .slick-row.even:hover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 3px solid var(--slickgrid-primary-color);
-    pointer-events: none;
-    z-index: 1000;
-  }
-    /* Form controls and filters */
+  /* Form controls and filters */
   .slick-filter,
   .form-control,
   .slider-values,
@@ -92,26 +79,49 @@ body {
     background-color: var(--slickgrid-bg-color) !important;
     color: var(--slickgrid-text-color) !important;
   }  
-  
-  /* Selected Row styling when enabled */
-  .slick-row[class*="active"] {
-    .slick-cell[class*="selected"] {
-      background-color: var(--slickgrid-primary-color) !important;
 
-      /* Remove slickgrid default borders that cause content shift */
-      border: none !important;
-      box-shadow: none !important;
-    }
+  /* Hover effect when row selection is enabled */
+  &.row-selection-enabled .odd:hover::before,
+  &.row-selection-enabled .slick-row.even:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid var(--slickgrid-primary-color);
+    pointer-events: none;
+    z-index: 1000;
   }
 
-  /* Active cell styling when eneabled */
-  .slick-cell[class*="active"] {
-  background-color: var(--slickgrid-primary-color) !important;
-  color: var(--slickgrid-text-color) !important;
+  /* Hover for cells when row selection is disabled  */
+  &.row-selection-disabled .slick-cell:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid var(--slickgrid-primary-color);
+    pointer-events: none;
+    z-index: 1000;
+  }
 
-  /* Remove slickgrid default borders that cause content shift */
-  border: none !important;
-  box-shadow: none !important;
-}
+  /* Selected row styling when row selection is enabled */
+  &.row-selection-enabled .slick-cell[class*="selected"] {
+  background-color: var(--slickgrid-primary-color) !important;
+  }
+
+  /* Active cell styling when row selection is disabled */
+  &.row-selection-disabled .slick-cell[class*="active"] {
+    background-color: var(--slickgrid-primary-color) !important;
+    color: var(--slickgrid-text-color) !important;
+  }
+
+  /* Remove borders and box shadows that cause content shift on selection */
+  .slick-cell {
+    border: none !important;
+    box-shadow: none !important;
+  }
 
 }

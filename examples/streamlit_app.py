@@ -331,19 +331,19 @@ options = {
 }
 
 out = slickgrid(data, columns, options, key="mygrid", on_click="rerun")
+st.write(out)
+
+# @st.dialog("Details", width="large")
+# def show_dialog(item):
+#     st.write("Congrats! You clicked on the row below:")
+#     st.write(item)
+
+#     st.write("Here's a random chart for you:")
+#     st.write("")
+
+#     st.scatter_chart(np.random.randn(100, 5))
 
 
-@st.dialog("Details", width="large")
-def show_dialog(item):
-    st.write("Congrats! You clicked on the row below:")
-    st.write(item)
-
-    st.write("Here's a random chart for you:")
-    st.write("")
-
-    st.scatter_chart(np.random.randn(100, 5))
-
-
-if out is not None:
-    row, col = out
-    show_dialog(data[row])
+# if out is not None:
+#     row, col = out
+#     show_dialog(data[row])

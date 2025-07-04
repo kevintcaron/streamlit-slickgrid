@@ -44,23 +44,41 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
   const [lastClickedCell, setLastClickedCell] = useState<[number, number] | null>(null)
   const [clickCount, setClickCount] = useState(0)
   
-  // Helper function to clear active and selected classes for toggle effect
-  const clearActiveSelection = useCallback(() => {
+  // Check if row selection is disabled to apply conditional styling
+  const isRowSelectionDisabled = !options.enableRowSelection
+  const wrapperClassName = isRowSelectionDisabled 
+    ? "streamlit-slickgrid-wrapper row-selection-disabled" 
+    : "streamlit-slickgrid-wrapper row-selection-enabled"
+
+  // Helper function to clear active classes for toggle effect
+  const clearActiveClasses = useCallback(() => {
     try {
       setTimeout(() => {
         const gridContainer = document.querySelector('#streamlit-slickgrid')
         if (gridContainer) {
-          const activeRows = gridContainer.querySelectorAll('.slick-row.active')
+          // const activeRows = gridContainer.querySelectorAll('.slick-row.active')
           const activeCells = gridContainer.querySelectorAll('.slick-cell.active')
-          const selectedCells = gridContainer.querySelectorAll('.slick-cell.selected')
-          
-          activeRows.forEach(row => row.classList.remove('active'))
+          // activeRows.forEach(row => row.classList.remove('active'))
           activeCells.forEach(cell => cell.classList.remove('active'))
+        }
+      }, 0)
+    } catch (error) {
+      console.warn('Failed to clear active classes:', error)
+    }
+  }, [])
+
+  // Helper function to clear selected classes for toggle effect
+  const clearSelectedClasses = useCallback(() => {
+    try {
+      setTimeout(() => {
+        const gridContainer = document.querySelector('#streamlit-slickgrid')
+        if (gridContainer) {
+          const selectedCells = gridContainer.querySelectorAll('.slick-cell.selected')
           selectedCells.forEach(cell => cell.classList.remove('selected'))
         }
       }, 0)
     } catch (error) {
-      console.warn('Failed to clear active selection:', error)
+      console.warn('Failed to clear selected classes:', error)
     }
   }, [])
   
@@ -101,9 +119,10 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
       
       if (newClickCount % 2 === 0) {
         // Even click count - send null to deselect
-        clearActiveSelection()
+        clearSelectedClasses()
+        clearActiveClasses()
         Streamlit.setComponentValue(null)
-      } else {
+            } else {
         // Odd click count - send coordinates to select and add 'selected' class to the cells in the clicked row
         setTimeout(() => {
           const gridContainer = document.querySelector('#streamlit-slickgrid')
@@ -114,6 +133,9 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
               cells.forEach(cell => cell.classList.add('selected'))
             }
           }
+          if (isRowSelectionDisabled) {
+            clearSelectedClasses()
+          }
         }, 0)
         Streamlit.setComponentValue(cellCoords)
       }
@@ -123,13 +145,14 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
       setClickCount(1)
       Streamlit.setComponentValue(cellCoords)
     }
-  }, [lastClickedCell, clickCount, clearActiveSelection])
+  }, [lastClickedCell, clickCount, clearSelectedClasses, clearActiveClasses])
 
   const onReactGridCreated = useCallback(() => {
     Streamlit.setFrameHeight()
   }, [])
+  
   return (
-    <div className="streamlit-slickgrid-wrapper" style={getThemeStyles()}>
+    <div className={wrapperClassName} style={getThemeStyles()}>
       <SlickgridReact
         gridId="streamlit-slickgrid"
         columnDefinitions={columns}
