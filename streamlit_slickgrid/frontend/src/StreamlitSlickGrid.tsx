@@ -53,7 +53,6 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
   // Helper function to clear active classes for toggle effect
   const clearActiveClasses = useCallback(() => {
     try {
-      setTimeout(() => {
         const gridContainer = document.querySelector('#streamlit-slickgrid')
         if (gridContainer) {
           // const activeRows = gridContainer.querySelectorAll('.slick-row.active')
@@ -61,7 +60,6 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
           // activeRows.forEach(row => row.classList.remove('active'))
           activeCells.forEach(cell => cell.classList.remove('active'))
         }
-      }, 0)
     } catch (error) {
       console.warn('Failed to clear active classes:', error)
     }
@@ -70,13 +68,11 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
   // Helper function to clear selected classes for toggle effect
   const clearSelectedClasses = useCallback(() => {
     try {
-      setTimeout(() => {
         const gridContainer = document.querySelector('#streamlit-slickgrid')
         if (gridContainer) {
           const selectedCells = gridContainer.querySelectorAll('.slick-cell.selected')
           selectedCells.forEach(cell => cell.classList.remove('selected'))
         }
-      }, 0)
     } catch (error) {
       console.warn('Failed to clear selected classes:', error)
     }
