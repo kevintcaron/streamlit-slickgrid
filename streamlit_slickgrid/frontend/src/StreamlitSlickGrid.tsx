@@ -73,6 +73,7 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
           const selectedCells = gridContainer.querySelectorAll('.slick-cell.selected')
           selectedCells.forEach(cell => cell.classList.remove('selected'))
         }
+
     } catch (error) {
       console.warn('Failed to clear selected classes:', error)
     }
@@ -115,10 +116,16 @@ function StreamlitSlickGrid({ args, disabled, theme }: ComponentProps): ReactEle
       
       if (newClickCount % 2 === 0) {
         // Even click count - send null to deselect
-        clearSelectedClasses()
-        clearActiveClasses()
-        Streamlit.setComponentValue(null)
-            } else {
+        setTimeout(() => {
+          const grid = ev.detail.args.grid;
+          if (grid.getSelectionModel) {
+            grid.getSelectionModel().setSelectedRanges([]);
+          }
+          clearSelectedClasses();
+          clearActiveClasses();
+          Streamlit.setComponentValue(null);
+        }, 0);
+      } else {
         // Odd click count - send coordinates to select and add 'selected' class to the cells in the clicked row
         setTimeout(() => {
           const gridContainer = document.querySelector('#streamlit-slickgrid')
