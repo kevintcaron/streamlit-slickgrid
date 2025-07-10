@@ -124,4 +124,14 @@ body {
     box-shadow: none !important;
   }
 
+  /* Set color of grid-canvas background to match theme */
+  .grid-canvas {
+    background-color: var(--slickgrid-bg-color) !important;
+  }
+
+  /* Set bottom border of each row to match text color */
+  .slick-cell {
+    border-bottom: 1px solid var(--slickgrid-text-color) !important;
+  }
+
 }
